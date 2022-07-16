@@ -6,14 +6,82 @@ const { Product, Category, Tag, ProductTag } = require('../../models');
 // get all products
 router.get('/', (req, res) => {
   // find all products
-  // be sure to include its associated Category and Tag data
+  Product.findAll({
+    //Query configuration
+    attributes: [
+      'id',
+      'product_name',
+      'price',
+      'stock',
+      'category_id',
+      [sequelize.literal('SELECT * FROM product')]
+    ],
+    // be sure to include its associated Category and Tag data
+    include: [
+      {
+        model: Category,
+        attributes: ['id'],
+      },
+      {
+        model: Tag,
+        attributes: ['id', 'tag_name']
+      }
+    ]
+  })
+  .then(dbProductData => res.json(dbProductData))
+  .catch(err => {
+    console.log(err);
+    res.status(500).json(err);
+  })
 });
 
 // get one product
 router.get('/:id', (req, res) => {
   // find a single product by its `id`
+  
+  Product.findOne({
+    where: {
+      id: req.params.id
+    },
+    attributes: [
+      'id',
+      'product_name',
+      'price',
+      'stock',
+      'category_id',
+      [sequelize.literal('SELECT * FROM product')]
+    ], 
   // be sure to include its associated Category and Tag data
+  include: [
+    {
+      model: Category,
+      attributes: [
+        'id',
+        'category_name'
+      ]
+    },
+    {
+      model: Tag,
+      attributes: [
+        'id',
+        'tag_name',
+      ]
+    }
+
+  ]
+  })
 });
+
+
+
+
+/*
+    product_name: req.body.product_name,
+    price: req.body.price,
+    stock: req.body.stock,
+    tagIds: req.body.tagIds
+*/
+
 
 // create new product
 router.post('/', (req, res) => {

@@ -41,3 +41,14 @@ models/products.js
 
 api/category-routes
     [sequelize.literal('(SELECT COUNT(*) FROM product WHERE product.id = product.product_id)'), 'product_count']
+
+routes/api/product-routes.js
+    how to createn new products when the code is "Product.create(req.body)"? I was thinking about not using req.body, but instead, do the following:
+    "
+    Product.create({
+        product_name: req.body.product_name,
+        price: req.body.price,
+        stock: req.body.stock,
+        tagIds: req.body.tagIds
+    })
+    "
