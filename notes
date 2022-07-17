@@ -52,3 +52,6 @@ routes/api/product-routes.js
         tagIds: req.body.tagIds
     })
     "
+
+
+    sequelize ==> better way to write SQL

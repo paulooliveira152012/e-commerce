@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const { Category, Product } = require('../../models');
+const sequelize = require('sequelize')
 
 // The `/api/categories` endpoint
 
@@ -7,10 +8,6 @@ router.get('/', (req, res) => {
   // find all categories
   // be sure to include its associated Products
   Category.findAll({
-    attributes: [
-      'id',
-       'category_name',
-    ],
     include: [
       //including associated products
       {
@@ -21,7 +18,6 @@ router.get('/', (req, res) => {
           'price',
           'stock',
           'category_id'
-          [sequelize.literal('(SELECT COUNT(*) FROM product WHERE product.id = product.product_id)'), 'product_count']
         ]
       }
     ]
@@ -52,18 +48,23 @@ router.get('/:id', (req, res) => {
           'price',
           'stock',
           'category_id'
-          [sequelize.literal('(SELECT COUNT(*) FROM product WHERE product.id = product.product_id)'), 'product_count']
         ]
       }
     ]
   })
+  //display content
+  .then(dbCategoryData => res.json(dbCategoryData))
+  //if there is an error then...:
+  .catch(err => {
+    console.log(err);
+    res.status(500).json(err)
+  });
 });
 
 //router to create a new category
 router.post('/', (req, res) => {
   // create a new category
   Category.create({
-    id: req.body.id,
     category_name: req.body.category_name
   })
   .then(dbCategoryData => res.json(dbCategoryData))
@@ -77,14 +78,10 @@ router.post('/', (req, res) => {
 router.put('/:id', (req, res) => {
   // update a category by its `id` value
   Category.update(
-    {
-      id: req.body.id,
-      category_name: req.body.category_name
-    },
+    req.body,
     {
       where: {
         id: req.params.id,
-        category_name: req.params.category_name
       }
     }
   )

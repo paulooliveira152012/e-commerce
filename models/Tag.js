@@ -9,7 +9,7 @@ Tag.init(
     // define columns
     id: {
       //set data type as integer
-      type: dataTypes.INTEGER,
+      type: DataTypes.INTEGER,
       //specify it does not accepts null values
       allowNull: false,
       //set as primery key
@@ -19,7 +19,7 @@ Tag.init(
     },
     tag_name: {
       //set type as string
-      type: dataTypes.STRING
+      type: DataTypes.STRING
     }
   },
   {

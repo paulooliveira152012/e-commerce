@@ -21,7 +21,7 @@ Product.init(
     },
     product_name: {
       //define datatype as string
-      type: dataTypes.STRING,
+      type: DataTypes.STRING,
       //no null values
       allowNull: false,
     },
@@ -32,7 +32,7 @@ Product.init(
       allowNull: false,
       //validates that the value is a decimal
       validate: {
-        DECIMAL: true
+        isDecimal: true
       }
     },
     stock: {
@@ -44,11 +44,11 @@ Product.init(
       default: 10,
       //validates that the value is numeric
       validate: {
-        Number: true
+        isNumeric: true
       }
     },
     category_id: {
-      type: dataTypes.INTEGER,
+      type: DataTypes.INTEGER,
       references: {
         model: 'category',
         key: 'id'
