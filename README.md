@@ -11,7 +11,12 @@
   E-commerce Back End allows you to create, update and delete relational data amongst 'categories', 'products', and 'tags' (for the produtc); and by doing so setting up a e-commerce web application environment.
   
   ## instalation
-  * Clone git repository in your machine * install NPM dependencies -MySQL2 -Sequelize -Express * Node . or npm start
+  * Clone git repository in your machine 
+  * install NPM dependencies 
+    - MySQL2 
+    - Sequelize 
+    - Express 
+  * Node . or npm start
 
   ## usage
   This application is used for correlational database development.
